@@ -51,4 +51,30 @@ function moveGerbil(dx, dy) {
   }
 
   if (maze[newY][newX] === seed) {
-    console.log('G
+    console.log('Gerbil ate a sunflower seed!');
+  }
+
+  maze[y][x] = empty;
+  maze[newY][newX] = gerbil;
+  renderMaze();
+}
+
+function handleKeydown(event) {
+  switch (event.key) {
+    case 'ArrowUp':
+      moveGerbil(0, -1);
+      break;
+    case 'ArrowDown':
+      moveGerbil(0, 1);
+      break;
+    case 'ArrowLeft':
+      moveGerbil(-1, 0);
+      break;
+    case 'ArrowRight':
+      moveGerbil(1, 0);
+      break;
+  }
+}
+
+renderMaze();
+document.addEventListener('keydown', handleKeydown);
