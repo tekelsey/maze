@@ -23,10 +23,16 @@ function renderMaze() {
     for (let x = 0; x < maze[y].length; x++) {
       mazeString += maze[y][x];
     }
-    mazeString += '<br>'; // Use a line break instead of '\n'
+    mazeString += '\n';
   }
 
-  mazeElement.innerHTML = mazeString; // Use innerHTML instead of textContent
+  // Use the maze template
+  const mazeTemplate = document.getElementById('mazeTemplate');
+  const content = mazeTemplate.content.cloneNode(true);
+  const preElement = content.querySelector('pre');
+  preElement.textContent = mazeString;
+  mazeElement.innerHTML = '';
+  mazeElement.appendChild(content);
 }
 
 
