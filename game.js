@@ -7,7 +7,7 @@ const empty = ' ';
 
 const maze = [
   ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#'],
-  ['#', '\uD83D\uDC2D', ' ', ' ', ' ', ' ', '#', ' ', '\uD83C\uDF3B', '#'],
+  ['#', '\uD83D\uDC39', ' ', ' ', ' ', ' ', '#', ' ', '\uD83C\uDF3B', '#'],
   ['#', ' ', '#', '#', ' ', '#', '#', ' ', ' ', '#'],
   ['#', ' ', '#', ' ', ' ', ' ', ' ', ' ', '#', '#'],
   ['#', ' ', ' ', ' ', '#', '#', ' ', ' ', ' ', '#'],
@@ -18,85 +18,61 @@ const maze = [
   ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#'],
 ];
 
+const gerbil = {
+  x: 1,
+  y: 1,
+};
 
-function renderMaze() {
-  mazeElement.innerHTML = '';
-
-  for (let y = 0; y < maze.length; y++) {
-    const row = document.createElement('tr');
-    for (let x = 0; x < maze[y].length; x++) {
-      const cell = document.createElement('td');
-      cell.textContent = maze[y][x];
-      row.appendChild(cell);
+function drawMaze() {
+  const mazeTable = document.getElementById('maze');
+  mazeTable.innerHTML = '';
+  for (const row of maze) {
+    const tr = document.createElement('tr');
+    for (const cell of row) {
+      const td = document.createElement('td');
+      td.textContent = cell;
+      tr.appendChild(td);
     }
-    mazeElement.appendChild(row);
+    mazeTable.appendChild(tr);
   }
 };
 
-function handleKeydown(event) {
-  let dx = 0;
-  let dy = 0;
+function move(direction) {
+  const newX = gerbil.x + direction.x;
+  const newY = gerbil.y + direction.y;
 
-  switch (event.key) {
-    case 'ArrowUp':
-      dy = -1;
-      break;
-    case 'ArrowDown':
-      dy = 1;
-      break;
-    case 'ArrowLeft':
-      dx = -1;
-      break;
-    case 'ArrowRight':
-      dx = 1;
-      break;
-    default:
-      return;
-  }
+  if (maze[newY][newX] !== '#') {
+    maze[gerbil.y][gerbil.x] = ' ';
+    gerbil.x = newX;
+    gerbil.y = newY;
 
-  event.preventDefault();
-  moveGerbil(dx, dy);
-};
+    // Check if the gerbil is on a seed
+    if (maze[gerbil.y][gerbil.x] === '\uD83C\uDF3B') {
+      // Change the seed to an empty space
+      maze[gerbil.y][gerbil.x] = ' ';
 
-function moveGerbil(dx, dy) {
-  const gerbilPos = findGerbil();
-  const targetX = gerbilPos.x + dx;
-  const targetY = gerbilPos.y + dy;
+      // Display the "Yum!" message
+      const messageElement = document.getElementById('message');
+      messageElement.textContent = 'Yum!';
+      setTimeout(() => {
+        messageElement.textContent = '';
+      }, 1000);
 
-  const targetCell = maze[targetY] && maze[targetY][targetX];
-  if (targetCell === seed) {
-    maze[targetY][targetX] = empty;
-  } else if (targetCell !== empty) {
-    return;
-  }
-
-  maze[gerbilPos.y][gerbilPos.x] = empty;
-  maze[targetY][targetX] = gerbil;
-
-  renderMaze();
-};
-
-function findGerbil() {
-  for (let y = 0; y < maze.length; y++) {
-    for (let x = 0; x < maze[y].length; x++) {
-      if (maze[y][x] === gerbil) {
-        return { x, y };
+      // Check if all seeds are eaten
+      const hasRemainingSeeds = maze.some(row => row.includes('\uD83C\uDF3B'));
+      if (!hasRemainingSeeds) {
+        messageElement.textContent = 'Congrats!';
       }
     }
+
+    maze[gerbil.y][gerbil.x] = '\uD83D\uDC39';
+    drawMaze();
   }
-};
+}
 
-renderMaze();
-document.addEventListener('keydown', handleKeydown);
+document.getElementById('btnUp').addEventListener('click', () => move({ x: 0, y: -1 }));
+document.getElementById('btnDown').addEventListener('click', () => move({ x: 0, y: 1 }));
+document.getElementById('btnLeft').addEventListener('click', () => move({ x: -1, y: 0 }));
+document.getElementById('btnRight').addEventListener('click', () => move({ x: 1, y: 0 }));
 
-window.onload = function () {
-  const btnUp = document.getElementById('btnUp');
-  const btnDown = document.getElementById('btnDown');
-  const btnLeft = document.getElementById('btnLeft');
-  const btnRight = document.getElementById('btnRight');
-
-  btnUp.addEventListener('click', () => moveGerbil(0, -1));
-  btnDown.addEventListener('click', () => moveGerbil(0, 1));
-  btnLeft.addEventListener('click', () => moveGerbil(-1, 0));
-  btnRight.addEventListener('click', () => moveGerbil(1, 0));
-};
+drawMaze();
