@@ -17,22 +17,17 @@ window.onload = function () {
   btnRight.addEventListener('click', () => moveGerbil(1, 0));
 
 function renderMaze() {
-  let mazeString = '';
+  mazeElement.innerHTML = '';
 
   for (let y = 0; y < maze.length; y++) {
+    const row = document.createElement('tr');
     for (let x = 0; x < maze[y].length; x++) {
-      mazeString += maze[y][x];
+      const cell = document.createElement('td');
+      cell.textContent = maze[y][x];
+      row.appendChild(cell);
     }
-    mazeString += '\n';
+    mazeElement.appendChild(row);
   }
-
-  // Use the maze template
-  const mazeTemplate = document.getElementById('mazeTemplate');
-  const content = mazeTemplate.content.cloneNode(true);
-  const preElement = content.querySelector('pre');
-  preElement.textContent = mazeString;
-  mazeElement.innerHTML = '';
-  mazeElement.appendChild(content);
 }
 
 
