@@ -5,8 +5,8 @@ body {
   align-items: center;
   height: 100vh;
   margin: 0;
-  background-color: black;
-  color: white;
+  background-color: white; /* Change the background color to white */
+  color: black;
 }
 
 #gameContainer {
@@ -24,7 +24,7 @@ body {
   height: 1rem;
   text-align: center;
   vertical-align: middle;
-  color: white; /* Add this line to set the text color to white */
+  color: black; /* Change the text color to black */
 }
 
 #controls {
