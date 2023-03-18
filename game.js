@@ -31,7 +31,7 @@ function renderMaze() {
     }
     mazeElement.appendChild(row);
   }
-}
+};
 
 function handleKeydown(event) {
   let dx = 0;
@@ -56,7 +56,7 @@ function handleKeydown(event) {
 
   event.preventDefault();
   moveGerbil(dx, dy);
-}
+};
 
 function moveGerbil(dx, dy) {
   const gerbilPos = findGerbil();
@@ -74,7 +74,7 @@ function moveGerbil(dx, dy) {
   maze[targetY][targetX] = gerbil;
 
   renderMaze();
-}
+};
 
 function findGerbil() {
   for (let y = 0; y < maze.length; y++) {
@@ -84,7 +84,7 @@ function findGerbil() {
       }
     }
   }
-}
+};
 
 renderMaze();
 document.addEventListener('keydown', handleKeydown);
