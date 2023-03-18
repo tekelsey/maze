@@ -1,9 +1,4 @@
-const mazeElement = document.getElementById('maze');
 
-const gerbil = '\uD83D\uDC2D';
-const seed = '\uD83C\uDF3B';
-const wall = '#';
-const empty = ' ';
 
 const maze = [
   ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#'],
