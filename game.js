@@ -16,6 +16,20 @@ window.onload = function () {
   btnLeft.addEventListener('click', () => moveGerbil(-1, 0));
   btnRight.addEventListener('click', () => moveGerbil(1, 0));
 
+function renderMaze() {
+  let mazeString = '';
+
+  for (let y = 0; y < maze.length; y++) {
+    for (let x = 0; x < maze[y].length; x++) {
+      mazeString += maze[y][x];
+    }
+    mazeString += '<br>'; // Use a line break instead of '\n'
+  }
+
+  mazeElement.innerHTML = mazeString; // Use innerHTML instead of textContent
+}
+
+
   renderMaze();
   document.addEventListener('keydown', handleKeydown);
 };
