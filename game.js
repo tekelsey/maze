@@ -1,7 +1,7 @@
 const mazeElement = document.getElementById('maze');
 
 const gerbil = 'G';
-const seed = 'S';
+const seed = '\uD83C\uDF3B';
 const wall = '#';
 const empty = ' ';
 
