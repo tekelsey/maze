@@ -12,4 +12,42 @@ body {
 #gameContainer {
   display: flex;
   flex-direction: column;
-  align-items:
+  align-items: center;
+}
+
+#maze {
+  border-collapse: collapse;
+}
+
+#maze td {
+  width: 1rem;
+  height: 1rem;
+  text-align: center;
+  vertical-align: middle;
+  color: white; /* Add this line to set the text color to white */
+}
+
+#controls {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+#btnUp {
+  grid-column: 2;
+}
+
+#btnDown {
+  grid-column: 2;
+}
+
+#btnLeft {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+#btnRight {
+  grid-column: 3;
+  grid-row: 2;
+}
